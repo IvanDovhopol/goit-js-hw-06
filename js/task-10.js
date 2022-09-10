@@ -1,54 +1,36 @@
-//
-//  ====== НЕ ОКОНЧЕНО, запутался, пока можно не проверять =================
-
 const refs = {
-	input: document.querySelector('#controls input'),
-	btnCreate: document.querySelector('[data-create]'),
-	btnDestroy: document.querySelector('[data-destroy]'),
+	controls: document.querySelector('#controls'),
+	input: controls.querySelector('#controls input'),
+	btnCreate: controls.querySelector('[data-create]'),
+	btnDestroy: controls.querySelector('[data-destroy]'),
 	output: document.querySelector('#boxes'),
 };
 
-refs.input.addEventListener('input', onInputPresentValue);
 refs.btnCreate.addEventListener('click', createBoxes);
 refs.btnDestroy.addEventListener('click', destroyBoxes);
 
-const murkupBoxes = [];
-
-function onInputPresentValue(event) {
-	console.log('value', event.currentTarget.value);
-	return event.currentTarget.value;
-}
-
 function createBoxes() {
+	const boxes = [];
+
 	for (let i = 1; i <= refs.input.value; i += 1) {
 		const markup = `<div class="box" style="background-color: ${getRandomHexColor()}; width: ${
 			20 + i * 10
-		}px; height: ${20 + i * 10}px"></div>`;
+		}px; height: ${
+			20 + i * 10
+		}px; outline: 1px solid ${getRandomHexColor()}"></div>`;
 
-		murkupBoxes.push(markup);
-		console.log('markup :>> ', markup);
-		console.log('murkupBoxes :>> ', murkupBoxes);
+		boxes.push(markup);
 	}
 
-	refs.output.innerHTML = murkupBoxes.join('');
-	// refs.input.value = 0;
+	refs.output.innerHTML = boxes.join('');
 }
 
 function destroyBoxes() {
-	// console.log;
-	// refs.output.parentNode.children[3].childNodes.forEach(a => a.remove());
-	// console.log(refs.output.parentNode.children[3].childNodes);
-	// refs.output.parentNode.children[3].childNodes.forEach(a => a.remove());
-	// refs.output.parentNode.removeChild(refs.output);
-
-	// const boxes = refs.output.querySelectorAll('.box');
-	const boxes = refs.output.parentNode.children[3].childNodes;
+	const boxes = refs.output.querySelectorAll('.box');
 
 	for (const box of boxes) {
 		box.remove();
 	}
-
-	// refs.input.value = 0;
 }
 
 function getRandomHexColor() {
